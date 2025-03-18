@@ -35,7 +35,7 @@ def preprocess_text_input(text):
     return ' '.join(text)
 
 # YouTube API setup (Replace with your own API Key)
-API_KEY = "AIzaSyDAOgG9Wcok2I3eVMAsooubpUoVuz1zGL8"  
+API_KEY = "API_KEY"  
   # Replace with your actual API key
 youtube = build('youtube', 'v3', developerKey=API_KEY)
 
