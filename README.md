@@ -1,91 +1,72 @@
-# YouTube Comment Scraper
+# README: Sentiment Analysis Pipeline
 
-This Python script allows you to search for YouTube videos based on specific criteria and extract comments from those videos. It utilizes the YouTube Data API to perform searches and retrieve comments.
-
-## Features
-
-- Search for YouTube videos using keywords and category IDs
-- Extract comments from the searched videos
-- Save video details and comments to a CSV file
-
-## Prerequisites
-
-Before running the script, make sure you have the following:
-
-1. Python 3.x installed on your system
-2. A Google Cloud project with the YouTube Data API enabled
-3. An API key for accessing the YouTube Data API
+## Overview
+This project involves sentiment analysis on textual data, specifically YouTube video metadata and comments. It leverages a pre-trained model from Hugging Face and an LSTM model for sentiment classification. The notebook preprocesses text data before performing classification.
 
 ## Installation
-
-1. Clone this repository or download the script file.
-
-2. Install the required Python packages:
-
+To run this notebook and the Flask application, ensure you have the necessary dependencies installed:
 ```bash
-pip install google-api-python-client python-dotenv
+pip install python-dotenv googleapiclient transformers torch tensorflow keras flask nltk pytube
 ```
 
-3. Create a `.env` file in the same directory as the script and add your YouTube Data API key:
+## Steps in the Notebook
 
-```
-API_KEY=your_api_key_here
-```
+### 1. Environment Setup
+- The script initializes required libraries and environment variables.
+- It installs necessary dependencies like `python-dotenv` to handle API credentials.
+
+### 2. Data Retrieval
+- The Google API Client and Pytube are used to fetch data from YouTube.
+- Authentication is handled via environment variables to access APIs securely.
+- The script extracts video metadata (title, description) and comments for analysis.
+
+### 3. Data Preprocessing
+- The text data is cleaned, tokenized, and prepared for sentiment analysis.
+- Steps include:
+  - Converting text to lowercase
+  - Removing stopwords
+  - Tokenization
+  - Lemmatization
+  - Padding sequences for LSTM input
+
+### 4. Sentiment Analysis
+- Two models are used for sentiment classification:
+  1. A pre-trained transformer model from Hugging Face.
+  2. A custom-trained LSTM model for sentiment analysis.
+- The `pipeline` class is used for transformer-based predictions.
+- The LSTM model is loaded from `lstm_model_fina.h5` and used for classification.
+- The text data (title, description, and comments) is tokenized and padded before passing it to the LSTM model.
+- The model categorizes sentiment into Safe, Harmful, or Neutral.
+
+### 5. Flask API for Sentiment Analysis
+- A Flask application (`app.py`) provides an endpoint to analyze YouTube videos.
+- The `/analyze_video` endpoint:
+  - Accepts a YouTube video URL.
+  - Extracts metadata and comments.
+  - Processes text and applies sentiment classification using the LSTM model.
+  - Returns a JSON response with classification results.
+
+### 6. Output Analysis
+- The classified sentiments are stored or visualized for further analysis.
+- Results from both models can be compared to evaluate performance.
 
 ## Usage
+1. Run the Jupyter Notebook cell by cell to execute the sentiment analysis pipeline.
+2. To start the Flask API, run:
+   ```bash
+   python app.py
+   ```
+3. Send a POST request to the `/analyze_video` endpoint with a YouTube video URL.
 
-To use the script, follow these steps:
+## Future Improvements
+- Fine-tuning the sentiment model on a custom dataset.
+- Expanding preprocessing steps for better accuracy.
+- Integrating more advanced visualization techniques.
+- Optimizing the LSTM model for improved performance.
+- Enhancing the Flask API with additional endpoints for detailed analysis.
 
-1. Open the script in a Python editor or IDE.
+## Author
+Your Name
 
-2. Modify the search parameters in the `if __name__ == '__main__':` section:
-
-```python
-search_videos('search_query', 'category_id', max_results=number_of_videos, output_file='output_filename.csv')
-```
-
-- `search_query`: Keywords to search for (e.g., 'explicit lyrics|adult content|nsfw')
-- `category_id`: YouTube video category ID (e.g., '24' for Entertainment, '27' for Education)
-- `max_results`: Maximum number of videos to fetch (default is 10)
-- `output_file`: Name of the CSV file to save the results (default is 'videos_with_comments.csv')
-
-3. Run the script:
-
-```bash
-python script_name.py
-```
-
-## Functions
-
-### `get_all_comments(video_id)`
-
-This function fetches all comments from a specific YouTube video.
-
-### `search_videos(query, category_id, max_results=10, output_file='videos_with_comments.csv')`
-
-This function searches for YouTube videos based on the provided query and category, then extracts comments from those videos and saves the results to a CSV file.
-
-## Output
-
-The script generates a CSV file with the following columns:
-
-- VideoID
-- Title
-- Description
-- Comment
-
-Each row represents a single comment, along with the details of the video it belongs to.
-
-## Limitations
-
-- The script is subject to YouTube API quotas and limits.
-- The number of comments retrieved may be limited by API restrictions.
-
-## Legal Considerations
-
-Ensure that you comply with YouTube's terms of service and API usage guidelines when using this script. Respect copyright and privacy laws when collecting and using data from YouTube.
-
-## Disclaimer
-
-This script is for educational purposes only. The user is responsible for any consequences of using this script and should ensure they have the necessary permissions and rights to collect and use YouTube data.
+For any issues, please open a discussion or reach out!
 
