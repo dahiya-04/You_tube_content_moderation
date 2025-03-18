@@ -1,4 +1,5 @@
-YouTube Comment Scraper
+
+#YouTube Comment Scraper
 This Python script allows you to search for YouTube videos based on specific criteria and extract comments from those videos. It utilizes the YouTube Data API to perform searches and retrieve comments.
 
 Features
