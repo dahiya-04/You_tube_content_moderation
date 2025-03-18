@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Video Classification</title>
+</head>
+<body>
+    <h1>YouTube Video Classification</h1>
+    
+    <form method="POST" action="/analyze_video">
+        <label for="video_url">Enter YouTube Video URL:</label><br>
+        <input type="text" id="video_url" name="video_url" required>
+        <br><br>
+        <button type="submit">Analyze</button>
+    </form>
+
+    {% if final_classification %}
+        <h2>Analysis Results:</h2>
+        <p><strong>Video ID:</strong> {{ video_id }}</p>
+        <p><strong>Title:</strong> {{ title }}</p>
+        <p><strong>Description:</strong> {{ description }}</p>
+        <p><strong>Final Classification:</strong> {{ final_classification }}</p>
+        
+        <h3>Comment Classifications:</h3>
+        <ul>
+            {% for classification in comment_classifications %}
+                <li>{{ classification }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
