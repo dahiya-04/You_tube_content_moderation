@@ -46,9 +46,24 @@ pip install python-dotenv googleapiclient transformers torch tensorflow keras fl
   - Processes text and applies sentiment classification using the LSTM model.
   - Returns a JSON response with classification results.
 
-### 6. Output Analysis
+### 6. How Sentiment Classification Works in the API
+- The API receives a YouTube video URL via a POST request.
+- It extracts the video’s metadata and comments.
+- The text (title, description, and comments) is preprocessed (tokenized, lemmatized, and padded).
+- The processed text is passed through the LSTM model for classification.
+- The model assigns each text snippet a sentiment label (Safe, Harmful, or Neutral).
+- The sentiment of the entire video is determined based on the most common label among the comments.
+- The API returns a JSON response containing:
+  - The video ID, title, and description.
+  - The final sentiment classification.
+  - Individual classifications for each comment.
+
+### 7. Output Analysis
 - The classified sentiments are stored or visualized for further analysis.
 - Results from both models can be compared to evaluate performance.
+
+![image](https://github.com/user-attachments/assets/746d851e-fc4b-4102-91d6-f713afd4feea)
+
 
 ## Usage
 1. Run the Jupyter Notebook cell by cell to execute the sentiment analysis pipeline.
@@ -65,8 +80,4 @@ pip install python-dotenv googleapiclient transformers torch tensorflow keras fl
 - Optimizing the LSTM model for improved performance.
 - Enhancing the Flask API with additional endpoints for detailed analysis.
 
-## Author
-Your Name
-
-For any issues, please open a discussion or reach out!
 
